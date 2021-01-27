@@ -2,6 +2,8 @@
 export default {
     plugins: [['umi-plugin-react', {
         //开启dva功能
-        dva: true
+        dva: true,
+        //开启ant design
+        antd: true
     }]]
 };
