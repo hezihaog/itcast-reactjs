@@ -1,32 +1,39 @@
 import React from 'react';
+//导入连接器
+import {connect} from 'dva';
 
+//导入需要的组件
 import {Table, Divider, Tag, Pagination} from 'antd';
-
 const {Column} = Table;
 
-const data = [{
-    key: '1',
-    name: '张三',
-    age: 32,
-    address: '上海市',
-    tags: ['程序员', '帅气'],
-}, {
-    key: '2',
-    name: '李四', age: 42,
-    address: '北京市', tags: ['屌丝'],
-}, {
-    key: '3',
-    name: '王五',
-    age: 32,
-    address: '杭州市',
-    tags: ['高富帅', '富二代'],
-}];
+const namespaced = 'userList';
+
+@connect((state) => {
+    //绑定数据到props中
+    return {
+        data: state[namespaced].list
+    }
+}, (dispatch) => {
+    //绑定函数到props中
+    return {
+        initData: () => {
+            dispatch({
+                type: namespaced + "/initData"
+            });
+        }
+    }
+})
 
 class UserList extends React.Component {
+    componentDidMount() {
+        //数据初始化
+        this.props.initData();
+    }
+
     render() {
         return (
             <div>
-                <Table dataSource={data}
+                <Table dataSource={this.props.data}
                        pagination={{position: "bottom", total: 500, pageSize: 10, defaultCurrent: 3}}>
                     <Column
                         title="姓名"
