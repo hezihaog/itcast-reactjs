@@ -25,10 +25,21 @@ const namespace = "list";
             dispatch({
                 type: namespace + "/addNewData"
             });
+        },
+        //初始化方法
+        init: () => {
+            dispatch({
+                type: namespace + "/initData"
+            });
         }
     }
 })
 class List extends React.Component {
+    componentDidMount() {
+        //初始化操作
+        this.props.init();
+    }
+
     render() {
         return (
             <div>
